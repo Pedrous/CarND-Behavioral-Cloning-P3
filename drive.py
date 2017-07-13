@@ -21,7 +21,6 @@ app = Flask(__name__)
 model = None
 prev_image_array = None
 
-
 class SimplePIController:
     def __init__(self, Kp, Ki):
         self.Kp = Kp
@@ -129,6 +128,7 @@ if __name__ == '__main__':
             shutil.rmtree(args.image_folder)
             os.makedirs(args.image_folder)
         print("RECORDING THIS RUN ...")
+        print("")
     else:
         print("NOT RECORDING THIS RUN ...")
 
