@@ -128,7 +128,6 @@ if __name__ == '__main__':
             shutil.rmtree(args.image_folder)
             os.makedirs(args.image_folder)
         print("RECORDING THIS RUN ...")
-        print("")
     else:
         print("NOT RECORDING THIS RUN ...")
 
