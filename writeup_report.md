@@ -132,6 +132,8 @@ I finally randomly shuffled the data set and put 80 % of the data into a trainin
 
 I used the training data for training the model. The validation set helped determine if the model was over or under fitting. With my ultimate model I first trained for 3 epochs and the model was behaving quite nicely so I decided to train 6 epochs and I was satisfied with the process. I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
+In addtion I used a generator to read the data from the memory, the generator is shown in the model.py code file.
+
 #### 4. Simulation
 
-The model
+The video of my model driving one round around the track is provided here https://github.com/Pedrous/CarND-Behavioral-Cloning-P3/blob/master/run1.mp4. The model functions very well and stays on the track, no tires leave the drivable part of the road. Some improvement might be possible, if the training data would be recorded again and the model would be trained a little bit more. One more thing could be augment the image by doing horizontal transformation in the data.
