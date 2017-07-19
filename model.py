@@ -120,12 +120,12 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam')
 history_object = model.fit_generator(train_generator, samples_per_epoch= \
             6*len(train_samples), validation_data=validation_generator, \
-            nb_val_samples=6*len(validation_samples), nb_epoch=3, verbose = 1)
-            
-# Save the model   
+            nb_val_samples=6*len(validation_samples), nb_epoch=6, verbose = 1)
+
+# Save the model
 model.save('model.h5')
 
-### print the keys contained in the history object            
+### print the keys contained in the history object
 print(history_object.history.keys())
 
 ### plot the training and validation loss for each epoch
