@@ -111,25 +111,23 @@ The final model architecture (model.py lines 61-103) consisted of a convolution 
 
 ####3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded ten laps to clockwise and counterclockwise direction on track one using center lane driving. Here is an example image of center lane driving from all th three cameras:
+To capture good driving behavior, I first recorded ten laps to clockwise and counterclockwise direction on track one using center lane driving. Here is an example image of center lane driving from all the three cameras:
 
 ![alt text][left] ![alt text][center] ![alt text][right]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to return from the side of the track to the center. These images show what a recovery looks like starting from the right and returning to the center :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to return from the side of the track to the center. This was done for 1 round to both directions. These images show what a recovery looks like starting from the right and returning to the center:
 
 ![alt text][rec1] ![alt text][rec2] ![alt text][rec3] ![alt text][rec4] ![alt text][rec5] ![alt text][rec6] ![alt text][rec7]
-
-Then I repeated this process on track two in order to get more data points.
+![alt text][rec8] ![alt text][rec9] ![alt text][rec10] ![alt text][rec11] ![alt text][rec12] ![alt text][rec13]![alt text][rec14]
+![alt text][rec15] ![alt text][rec16] ![alt text][rec17] ![alt text][rec18] ![alt text][rec19] ![alt text][rec20] 
+![alt text][rec21] ![alt text][rec22] 
 
 To augment the data sat, I also flipped images and angles thinking that this would make the model more general so that it doesn't turn to the other direction all the time. For example, here is an image that has then been flipped:
 
 ![alt text][rec1] ![alt text][flip]
 
-Etc ....
+After the collection process, I had 39907 number of data points. And for the task I used the images from all the cameras so in total I had 119 721. Then I augmented all these files by flipping them so I had 239 442 images for the task. I then preprocessed this data by first normalizing the data between -0.5 and 0.5 and then I cropped 70 pixels from from the upper edge and 25 pixels from the lower edge of each image.
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+I finally randomly shuffled the data set and put 80 % of the data into a training set and 20 % into a validation set. So I was left with 191 554 images for the training and 47 888 images for validation.
 
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used the training data for training the model. The validation set helped determine if the model was over or under fitting. With my ultimate model I first trained for 3 epochs and the model was behaving quite nicely so I decided to train 6 epochs and I was satisfied with the process. I used an adam optimizer so that manually training the learning rate wasn't necessary.
