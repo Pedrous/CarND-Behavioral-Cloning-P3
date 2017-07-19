@@ -1,11 +1,3 @@
-#**Behavioral Cloning** 
-
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
 **Behavioral Cloning Project**
 
 The goals / steps of this project are the following:
@@ -18,13 +10,33 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[model]: ./images/model.png "Model Visualization"
+[left]: ./images/left.jpg "Center Lane Driving"
+[center]: ./images/center.jpg "Center Lane Driving"
+[right]: ./images/right.jpg "Center Lane Driving"
+[rec1]: ./images/recovery1.jpg "Recovery Image 1"
+[rec2]: ./images/recovery1.jpg "Recovery Image 2"
+[rec3]: ./images/recovery1.jpg "Recovery Image 3"
+[rec4]: ./images/recovery1.jpg "Recovery Image 4"
+[rec5]: ./images/recovery1.jpg "Recovery Image 5"
+[rec6]: ./images/recovery1.jpg "Recovery Image 6"
+[rec7]: ./images/recovery1.jpg "Recovery Image 7"
+[rec8]: ./images/recovery1.jpg "Recovery Image 8"
+[rec9]: ./images/recovery1.jpg "Recovery Image 9"
+[rec10]: ./images/recovery1.jpg "Recovery Image 10"
+[rec11]: ./images/recovery1.jpg "Recovery Image 11"
+[rec12]: ./images/recovery1.jpg "Recovery Image 12"
+[rec13]: ./images/recovery1.jpg "Recovery Image 13"
+[rec14]: ./images/recovery1.jpg "Recovery Image 14"
+[rec15]: ./images/recovery1.jpg "Recovery Image 15"
+[rec16]: ./images/recovery1.jpg "Recovery Image 16"
+[rec17]: ./images/recovery1.jpg "Recovery Image 17"
+[rec18]: ./images/recovery1.jpg "Recovery Image 18"
+[rec19]: ./images/recovery1.jpg "Recovery Image 19"
+[rec20]: ./images/recovery1.jpg "Recovery Image 20"
+[rec21]: ./images/recovery1.jpg "Recovery Image 21"
+[rec22]: ./images/recovery1.jpg "Recovery Image 22"
+[flip]: ./images/flipped.jpg "Flipped Image"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -54,23 +66,23 @@ The model.py file contains the code for training and saving the convolution neur
 
 ####1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+My model consists of a convolution neural network with 5x5 and 3x3 filter sizes and depths between 24 and 64 (model.py lines 70-93) 
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+The model includes ELU layers to introduce nonlinearity (code lines: 73, 78, 83, 88, 93, 100, 102, 104, 106), and the data is normalized in the model using a Keras lambda layer (code line 67). 
 
 ####2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model contains dropout layers in order to reduce overfitting (model.py lines: 72, 77, 82, 87, 92). 
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 105-113). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 ####3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 110).
 
 ####4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road and driving smoothly close to the inner edge of the curves.
 
 For details about how I created the training data, see the next section. 
 
@@ -78,46 +90,40 @@ For details about how I created the training data, see the next section.
 
 ####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The overall strategy for deriving a model architecture was to use the model by NVIDIA, with 5 convolutional layers and 5 dense layers after that added with some dropouts. 
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a convolution neural network model similar to the on that was used in the video lessons of the project. I thought this model was good so I only alteres it very little.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my loss was increasing in both data sets and I noticed that this was caused by the normalization of my data. I first normalized the data between -1 and 1 but that didn't seem so good as normalizing between -0.5 and 0.5 so I changed to the latter. 
 
-To combat the overfitting, I modified the model so that ...
+To combat the overfitting, I modified the model so that added dropouts after each convolutional layer before the ELU activations.
+Then I also changed the RELU's to ELU's to achieve faster training process.
 
-Then I ... 
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track, especially in the curves. To improve the driving behavior in these cases, I added data where the car is driven to the center of the road from the sides of the road.
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
-
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
+At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road. Although in some spots the car was driving quite close to the edge, I suspect that this was caused because of my training data and the fact that I trained the return from the sides of the road too close to the road.
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 61-103) consisted of a convolution neural network, ELU activations and Fully connected layers boosted with dropout layers is visualized here:
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
-
-![alt text][image1]
+![alt text][model]
 
 ####3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I first recorded ten laps to clockwise and counterclockwise direction on track one using center lane driving. Here is an example image of center lane driving from all th three cameras:
 
-![alt text][image2]
+![alt text][left] ![alt text][center] ![alt text][right]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to return from the side of the track to the center. These images show what a recovery looks like starting from the right and returning to the center :
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+![alt text][rec1] ![alt text][rec2] ![alt text][rec3] ![alt text][rec4] ![alt text][rec5] ![alt text][rec6] ![alt text][rec7]
 
 Then I repeated this process on track two in order to get more data points.
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+To augment the data sat, I also flipped images and angles thinking that this would make the model more general so that it doesn't turn to the other direction all the time. For example, here is an image that has then been flipped:
 
-![alt text][image6]
-![alt text][image7]
+![alt text][rec1] ![alt text][flip]
 
 Etc ....
 
