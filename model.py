@@ -5,7 +5,7 @@ import csv
 samples = []
 with open('./newdata/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
-    next(reader, None)
+    #next(reader, None)
     for line in reader:
         samples.append(line)
 
@@ -71,26 +71,31 @@ model.add(Cropping2D(cropping=((70,25), (0,0))))#, input_shape = (row, col, ch))
 # First convolutional layer with dropout and activation
 model.add(Convolution2D(24,5,5, subsample=(2,2)))
 #model.add(MaxPooling2D())
+model.add(Dropout(0.5))
 model.add(Activation('elu'))
 
 # Second convolutional layer with dropout and activation
 model.add(Convolution2D(36,5,5, subsample=(2,2)))
 #model.add(MaxPooling2D())
+model.add(Dropout(0.5))
 model.add(Activation('elu'))
 
 # Third convolutional layer with dropout and activation
 model.add(Convolution2D(48,5,5, subsample=(2,2)))
 #model.add(MaxPooling2D())
+model.add(Dropout(0.5))
 model.add(Activation('elu'))
 
 # Fourth convolutional layer with dropout and activation
 model.add(Convolution2D(64,3,3))
 #model.add(MaxPooling2D())
+model.add(Dropout(0.5))
 model.add(Activation('elu'))
 
 # Fifth convolutional layer with dropout and activation
 model.add(Convolution2D(64,3,3))
 #model.add(MaxPooling2D())
+model.add(Dropout(0.5))
 model.add(Activation('elu'))
 
 # Flattening
@@ -98,16 +103,16 @@ model.add(Flatten())#input_shape = (row, col, ch)))
 
 # Four connected layers with activations
 model.add(Dense(1164))
-model.add(Dropout(0.5))
+#model.add(Dropout(0.5))
 model.add(Activation('elu'))
 model.add(Dense(100))
-model.add(Dropout(0.5))
+#model.add(Dropout(0.5))
 model.add(Activation('elu'))
 model.add(Dense(50))
-model.add(Dropout(0.5))
+#model.add(Dropout(0.5))
 model.add(Activation('elu'))
 model.add(Dense(10))
-model.add(Dropout(0.5))
+#model.add(Dropout(0.5))
 model.add(Activation('elu'))
 model.add(Dense(1))
 
@@ -115,10 +120,13 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam')
 history_object = model.fit_generator(train_generator, samples_per_epoch= \
             6*len(train_samples), validation_data=validation_generator, \
-            nb_val_samples=6*len(validation_samples), nb_epoch=10, verbose = 1)
+            nb_val_samples=6*len(validation_samples), nb_epoch=3, verbose = 1)
+            
+# Save the model   
+model.save('model.h5')
 
 ### print the keys contained in the history object            
-print(history_object.keys())
+print(history_object.history.keys())
 
 ### plot the training and validation loss for each epoch
 plt.plot(history_object.history['loss'])
@@ -128,6 +136,3 @@ plt.ylabel('mean squared error loss')
 plt.xlabel('epoch')
 plt.legend(['training set', 'validation set'], loc='upper right')
 plt.show()
-
-# Save the model   
-model.save('model.h5')
