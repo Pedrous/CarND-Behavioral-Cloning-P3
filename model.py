@@ -47,10 +47,6 @@ def generator(samples, batch_size=32):
             y_train = np.array(angles)
             yield shuffle(X_train, y_train)
 
-# compile and train the model using the generator function
-train_generator = generator(train_samples, batch_size=32)
-validation_generator = generator(validation_samples, batch_size=32)
-
 ch, row, col = 3, 160, 320  # Trimmed image format
 
 # import the needed Keras tools
@@ -105,6 +101,10 @@ model.add(Activation('elu'))
 model.add(Dense(10))
 model.add(Activation('elu'))
 model.add(Dense(1))
+
+# compile and train the model using the generator function
+train_generator = generator(train_samples, batch_size=32)
+validation_generator = generator(validation_samples, batch_size=32)
 
 # Training the model
 model.compile(loss='mse', optimizer='adam')
