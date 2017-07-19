@@ -133,3 +133,5 @@ I finally randomly shuffled the data set and put 80 % of the data into a trainin
 I used the training data for training the model. The validation set helped determine if the model was over or under fitting. With my ultimate model I first trained for 3 epochs and the model was behaving quite nicely so I decided to train 6 epochs and I was satisfied with the process. I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
 #### 4. Simulation
+
+The model
